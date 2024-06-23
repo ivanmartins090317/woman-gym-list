@@ -1,0 +1,16 @@
+.container-form form select,
+.container-form form input,
+.container-form form button
+{
+  padding:2%;
+  margin: 0 1%;
+  border-radius:20px;
+  border:1px solid #333333;
+  outline:0;
+}
+.container-form form button{
+  border:none;
+  background:#9281f3;
+  padding:2% 5%;
+  color:#fff;
+}
