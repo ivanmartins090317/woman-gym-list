@@ -11,33 +11,51 @@ const App = () => {
     constructor(name, quantity) {
       this.id = crypto.randomUUID()
       this.name = name
-      this.quantity = quantity
+      this.quantity = +quantity
+      this.stored = false
     }
   } 
 
+
   const handleSubmit = (e) =>{
     e.preventDefault()
-    const {nome, select} = e.target.elements
-    const name = nome.value
-    const quantity = select.value
+    const {nome, selectQtd} = e.target.elements
+    let name = nome.value
+    const quantity = selectQtd.value
     const newItem = new Model(name, quantity)
-    console.log(newItem);
+
     setItems(prevState => ([...prevState, newItem] ))
   }
+  const handleChecked = (itemID) => 
+    setItems(prevState =>
+      prevState.map(item => (item.id === itemID ? {...item, stored: !item.stored} : item))
+    )
 
   const deleteItem = (itemID) =>{
    return setItems(items.filter(item => item.id !== itemID))
   }
+
   return (
     <>
     <Header/>
     <Form handleSubmit={handleSubmit}/>
+  <div className="container-main">
    {
     items.map(item =>(
-      <Item key={item.id} quantity={item.quantity} name={item.name} handleDelete={() => deleteItem(item.id)}/>
+ 
+        <Item 
+         verifyStored={item.stored ? 'isChecked' : " "}
+         key={item.id}
+         quantity={item.quantity}
+         name={item.name}
+         Isstored={item.stored}
+         handleCheck={() => handleChecked(item.id)}
+         handleDelete={() => deleteItem(item.id)}/>
+
     ))
 
    }
+  </div>
     <footer>
       <p>você tem {items.length} items na lista e já guardou tantos %</p>
     </footer>

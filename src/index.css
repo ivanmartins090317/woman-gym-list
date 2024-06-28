@@ -3,3 +3,11 @@ body{
   margin:5% auto;
   text-align:center;
 }
+.container-main{
+  display:flex;
+  width:100%;
+  height:auto;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin:5% 0;
+}
