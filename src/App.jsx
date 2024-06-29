@@ -4,6 +4,21 @@ import { Header } from "./components/Header";
 import { Form } from "./components/Form";
 import { Item } from "./components/Item";
 
+const Footer = ({items}) => {
+  const totalItems = items.reduce((acc, item) => item.stored ? acc + 1 : acc, 0)
+  const percetItemsStored = ((totalItems / items.length) * 100).toFixed(0)
+  const singularOurPlural = items.length === 1 ? 'item' : 'Items'
+
+  return(
+    <footer>
+      <p>
+        {`Você possui ${items.length} ${singularOurPlural} na lista`}
+        {items.length > 0 && <span> já guardou {totalItems} de ({percetItemsStored} %)</span>}
+      </p>
+    </footer>
+  )
+}
+
 const App = () => {
   const [items, setItems] = useState([])
   const [orderBy, SetOrderBy] = useState('newest')
@@ -17,7 +32,7 @@ const App = () => {
     }
   } 
 
-  const handleChangeOrder =(e) => SetOrderBy(e.target.value)
+  const handleChangeOrder = (e) => SetOrderBy(e.target.value)
 
   const sortedItems = orderBy === 'stored'
    ? items.filter(item => item.stored) 
@@ -74,9 +89,8 @@ const App = () => {
     </select>
    </div>
   </div>
-    <footer>
-      <p>você tem {items.length} items na lista e já guardou tantos %</p>
-    </footer>
+  
+   <Footer items={items} />
     </>
   )
 }
