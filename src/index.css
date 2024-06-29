@@ -2,6 +2,7 @@ body{
   width: 100%;
   margin:5% auto;
   text-align:center;
+  font-family: "Helvetica Neue",Helvetica,Arial
 }
 .container-main{
   display:flex;
@@ -10,4 +11,10 @@ body{
   flex-wrap:wrap;
   justify-content:center;
   margin:5% 0;
+}
+.list{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5%;
 }

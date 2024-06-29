@@ -6,6 +6,7 @@ import { Item } from "./components/Item";
 
 const App = () => {
   const [items, setItems] = useState([])
+  const [orderBy, SetOrderBy] = useState('newest')
 
   class Model {
     constructor(name, quantity) {
@@ -16,7 +17,9 @@ const App = () => {
     }
   } 
 
+  const handleChangeOrder =(e) => SetOrderBy(e.target.value)
 
+  const sortedItems = orderBy === 'stored' ? items.filter(item => item.stored) : items
   const handleSubmit = (e) =>{
     e.preventDefault()
     const {nome, selectQtd} = e.target.elements
@@ -40,21 +43,30 @@ const App = () => {
     <Header/>
     <Form handleSubmit={handleSubmit}/>
   <div className="container-main">
-   {
-    items.map(item =>(
- 
-        <Item 
-         verifyStored={item.stored ? 'isChecked' : " "}
-         key={item.id}
-         quantity={item.quantity}
-         name={item.name}
-         Isstored={item.stored}
-         handleCheck={() => handleChecked(item.id)}
-         handleDelete={() => deleteItem(item.id)}/>
+    <div className="list">
 
-    ))
+        {
+          sortedItems.map(item =>(
+      
+              <Item 
+              verifyStored={item.stored ? 'isChecked' : " "}
+              key={item.id}
+              quantity={item.quantity}
+              name={item.name}
+              Isstored={item.stored}
+              handleCheck={() => handleChecked(item.id)}
+              handleDelete={() => deleteItem(item.id)}/>
 
-   }
+          ))
+
+        }
+    </div>
+   <div className="filters">
+    <select value={orderBy} onChange={handleChangeOrder}>
+      <option value="newest">Itens inserido recentemente</option>
+      <option value="stored">Itens guardados</option>
+    </select>
+   </div>
   </div>
     <footer>
       <p>você tem {items.length} items na lista e já guardou tantos %</p>
