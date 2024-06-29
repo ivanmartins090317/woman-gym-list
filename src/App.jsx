@@ -19,7 +19,12 @@ const App = () => {
 
   const handleChangeOrder =(e) => SetOrderBy(e.target.value)
 
-  const sortedItems = orderBy === 'stored' ? items.filter(item => item.stored) : items
+  const sortedItems = orderBy === 'stored'
+   ? items.filter(item => item.stored) 
+   : orderBy === 'alphabetically'
+   ? items.toSorted((a, b) => a.name > b.name ? 1 : b.name > a.name ? -1 : 0 )
+   : items
+
   const handleSubmit = (e) =>{
     e.preventDefault()
     const {nome, selectQtd} = e.target.elements
@@ -65,6 +70,7 @@ const App = () => {
     <select value={orderBy} onChange={handleChangeOrder}>
       <option value="newest">Itens inserido recentemente</option>
       <option value="stored">Itens guardados</option>
+      <option value="alphabetically">Organizar por ordem alfabética</option>
     </select>
    </div>
   </div>
