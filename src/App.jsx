@@ -4,6 +4,7 @@ import { Header } from "./components/Header";
 import { Form } from "./components/Form";
 import { Item } from "./components/Item";
 
+
 const Footer = ({items}) => {
   const totalItems = items.reduce((acc, item) => item.stored ? acc + 1 : acc, 0)
   const percetItemsStored = ((totalItems / items.length) * 100).toFixed(0)
@@ -23,15 +24,8 @@ const App = () => {
   const [items, setItems] = useState([])
   const [orderBy, SetOrderBy] = useState('newest')
 
-  class Model {
-    constructor(name, quantity) {
-      this.id = crypto.randomUUID()
-      this.name = name
-      this.quantity = +quantity
-      this.stored = false
-    }
-  } 
 
+  const handleSubimitItem = (item) => setItems(prevState => [...prevState, item])
   const handleChangeOrder = (e) => SetOrderBy(e.target.value)
 
   const sortedItems = orderBy === 'stored'
@@ -40,15 +34,7 @@ const App = () => {
    ? items.toSorted((a, b) => a.name > b.name ? 1 : b.name > a.name ? -1 : 0 )
    : items
 
-  const handleSubmit = (e) =>{
-    e.preventDefault()
-    const {nome, selectQtd} = e.target.elements
-    let name = nome.value
-    const quantity = selectQtd.value
-    const newItem = new Model(name, quantity)
 
-    setItems(prevState => ([...prevState, newItem] ))
-  }
   const handleChecked = (itemID) => 
     setItems(prevState =>
       prevState.map(item => (item.id === itemID ? {...item, stored: !item.stored} : item))
@@ -61,7 +47,7 @@ const App = () => {
   return (
     <>
     <Header/>
-    <Form handleSubmit={handleSubmit}/>
+    <Form onSubmitItem={handleSubimitItem}/>
   <div className="container-main">
     <div className="list">
 
